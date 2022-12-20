@@ -1,0 +1,53 @@
+<div class="container">
+    <h2 class="title text-center my-5"><%= title %></h2>
+    <div class="row">
+        <div class="col-md-8 m-auto">
+            <form id="createSurveyForm" class="row bootstrapForm" method="post">
+                <div id="questionArea">
+                    <% for(let i = 0; i < surveys.questions.length; i++) { %>
+                        <% if(surveys.questions[i].qType == "text") { %>
+                            <div class="mb-3 qText cq tq">
+                                <label for="text<%= i + 1 %>" class="form-label">Question <%= i + 1 %> : <%= surveys.questions[i].qText %></label>
+                                <input type="text" class="form-control" id="text<%= i + 1%>" required name="response<%= i %>" value="">
+                                <input type="hidden" id="text<%= i + 1 %>" name="question" value="">
+                            </div>
+                        <% } else if (surveys.questions[i].qType == "mc") { %>
+                            <div class="mb-3 qText cq rq">
+                                <label for="mc<%= i + 1 %>" class="form-label">Question <%= i + 1 %> : <%= surveys.questions[i].qText %></label>
+                                 <input type="hidden" id="mc<%= i + 1 %>" name="question" value="">
+
+                                <% for(let ii = 0; ii < surveys.questions[i].qOption.length; ii++) { %>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" required name="response<%= i %>" id="qOption<% i %>-<%= ii + 1%>" value="<%= surveys.questions[i].qOption[ii] %>">
+                                        <label class="form-check-label q<%= i + 1 %>Option qOption" for="flexRadioDefault1">
+                                            <%= surveys.questions[i].qOption[ii] %>
+                                        </label>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% } else { %>
+                            <div class="mb-3 qText cq tfq">
+                                <label for="tf<%= i + 1 %>" class="form-label">Question <%= i + 1 %> : <%= surveys.questions[i].qText %></label>
+                                <input type="hidden" id="tf<%= i + 1 %>" name="question" value="">
+                                
+                                <% for(let ii = 0; ii < surveys.questions[i].qOption.length; ii++) { %>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" required name="response<%= i %>" id="qOption<% i %>-<%= ii + 1%>" value="<%= surveys.questions[i].qOption[ii] %>">
+                                        <label class="form-check-label q<%= i + 1 %>Option qOption" for="flexRadioDefault1">
+                                            <%= surveys.questions[i].qOption[ii] %>
+                                        </label>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% } %>
+                    <% } %>      
+                </div>
+                
+                <div class="col-md-12 text-center">
+                    <button id="btnResponse" type="submit" class="btn btn-primary btn-lg"><i class="fa-solid fa-square-poll-horizontal"></i> Submit Survey</button>
+                    <a href="/home" id="cbtnResponse" class="btn btn-warning btn-lg"><i class="fas fa-undo"></i> Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

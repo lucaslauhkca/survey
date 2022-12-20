@@ -1,0 +1,127 @@
+<div class="container">
+    <h2 class="title my-5"><%= title %></h2>
+    <a href="/survey/add" id="add" class="btn btn-warning my-3" ><i class="fa-solid fa-file-circle-plus fa-lg"></i> Create Survey</a>
+    <a href="/home" id="add" class="btn btn-warning my-3" ><i class="fa-solid fa-eye fa-lg"></i> View Survey</a>
+    <div class="row ">
+        <div class="col table-responsive d-none d-lg-block">
+            <table id="contactList" class="table table-dark table-hover table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="align-middle" scope="col">Title</th>
+                        <th class="text-center align-middle" scope="col">Start Date</th>
+                        <th class="text-center align-middle" scope="col">Expiry Date</th>
+                        <th class="text-center align-middle" scope="col">Manual Control</th>
+                        <th class="text-center align-middle" scope="col">Active</th>
+                        <th class="text-center align-middle" scope="col">Edit Survey</th>
+                        <th class="text-center align-middle" scope="col">Delete Survey</th>
+                        <th class="text-center align-middle" scope="col">View Responses</th>
+                        <th class="text-center align-middle" scope="col">Answer Survey</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let i = 0; i < surveys.length; i++) { %>
+                        <tr>
+                            <td><%= surveys[i].title %></td>
+                            <td class="text-center"><%= moment(surveys[i].startDate).format('YYYY-MM-DDTHH:mm') %></td>
+                            <td class="text-center"><%= moment(surveys[i].endDate).format('YYYY-MM-DDTHH:mm') %></td>
+                            <td class="text-center">
+                                <% if(!surveys[i].manualSet) {%>
+                                    Off &nbsp;<a href="/survey/changeactive/<%= surveys[i]._id %>"><i class="fa-solid fa-toggle-off fa-lg"></i></a>
+                                <% } else { %>
+                                    <% if(surveys[i].manualSetOn) {%>
+                                    On - Always Active &nbsp;<a href="/survey/changeactive/<%= surveys[i]._id %>"><i class="fa-solid fa-circle fa-lg" style="color:green"></i></a>
+                                    <% } else { %>
+                                    On - Always Inactive &nbsp;<a href="/survey/changeactive/<%= surveys[i]._id %>"><i class="fa-solid fa-circle fa-lg" style="color:red"></i></a>
+                                    <% } %>
+                                <% } %>
+                            </td>
+                            <td class="text-center">                                    
+                                <% if(surveys[i].active) {%>
+                                    <i class="fa-solid fa-circle-check fa-lg"></i>
+                                <% } else { %>
+                                    <i class="fa-solid fa-circle-xmark fa-lg"></i>
+                                <% } %>
+                            </td>
+                            <td class="text-center"><a class="update" href="/survey/update/<%= surveys[i]._id %>"><i class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                            <td class="text-center"><a class="delete" href="/survey/remove/<%= surveys[i]._id %>"><i class="fa-solid fa-folder-minus fa-lg"></i></a></td>
+                            <td class="text-center"><a class="response" href="/stat/viewstat/<%= surveys[i]._id %>"><i class="fa-solid fa-book-open"></i></a></td>
+                            <td class="text-center">
+                                <% if(surveys[i].active) {%>
+                                    <a class="view" href="/survey/response/add/<%= surveys[i]._id %>"><i class="fa-solid fa-square-poll-horizontal fa-lg"></i></a>
+                                <% } else { %>
+                                    <i class="fa-solid fa-ban"></i>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div> 
+        <div class="col d-lg-none">
+            <% for(let i = 0; i < surveys.length; i++) { %>
+                <table id="contactListMobile" class="table table-dark table-hover table-striped table-bordered ">
+                <tbody>
+                    <tr>
+                        <th scope="col" width="30%">Title</th>
+                        <td class="text-center align-middle"><%= surveys[i].title %></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Start Date</th>
+                        <td class="text-center align-middle"><%= moment(surveys[i].startDate).format('YYYY-MM-DDTHH:mm') %></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Expiry Date</th>
+                        <td class="text-center align-middle"><%= moment(surveys[i].endDate).format('YYYY-MM-DDTHH:mm') %></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Manual Control	</th>
+                        <td class="text-center align-middle">
+                             <% if(!surveys[i].manualSet) {%>
+                                Off &nbsp;<a href="/survey/changeactive/<%= surveys[i]._id %>"><i class="fa-solid fa-toggle-off fa-lg"></i></a>
+                            <% } else { %>
+                                <% if(surveys[i].manualSetOn) {%>
+                                On - Always Active &nbsp;<a href="/survey/changeactive/<%= surveys[i]._id %>"><i class="fa-solid fa-circle fa-lg" style="color:green"></i></a>
+                                <% } else { %>
+                                On - Always Inactive &nbsp;<a href="/survey/changeactive/<%= surveys[i]._id %>"><i class="fa-solid fa-circle fa-lg" style="color:red"></i></a>
+                                <% } %>
+                            <% } %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Active</th>
+                        <td class="text-center align-middle">
+                            <% if(surveys[i].active) {%>
+                                    <i class="fa-solid fa-circle-check fa-lg"></i>
+                                <% } else { %>
+                                    <i class="fa-solid fa-circle-xmark fa-lg"></i>
+                            <% } %>
+                    </tr>
+                    <tr>
+                        <th scope="col">Edit Survey</th>
+                        <td class="text-center align-middle"><a class="update" href="/survey/update/<%= surveys[i]._id %>"><i class="fa-solid fa-pen-to-square fa-lg"></i></a></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Delete Survey</th>
+                         <td class="text-center align-middle"><a class="delete" href="/survey/remove/<%= surveys[i]._id %>"><i class="fa-solid fa-folder-minus fa-lg"></i></a></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">View Responses</th>
+                        <td class="text-center align-middle"><a class="response" href="/stat/viewstat/<%= surveys[i]._id %>"><i class="fa-solid fa-book-open"></i></a></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Answer Survey</th>
+                        <td class="text-center align-middle">
+                            <% if(surveys[i].active) {%>
+                                <a class="view" href="/survey/response/add/<%= surveys[i]._id %>"><i class="fa-solid fa-square-poll-horizontal fa-lg"></i></a>
+                            <% } else { %>
+                                <i class="fa-solid fa-ban"></i>
+                            <% } %>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <% } %>
+        </div>
+    </div>  
+</div>
+</div>

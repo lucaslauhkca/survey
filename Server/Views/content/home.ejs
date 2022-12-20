@@ -1,0 +1,88 @@
+<div class="container-fluid p-0 ">
+    <div id="banner" class="position-relative overflow-hidden mb-5 px-0 ">
+        <div class="overlay"></div>
+            <video autoplay muted loop id="myVideo">
+                <source src="/Assets/video/banner2comp.mp4" type="video/mp4">
+            </video>
+            <div class="container">
+                <div class="d-flex h-100 text-center align-items-center">
+                    <div class="mx-auto px-3">
+                        <div class="w-100 text-white">
+                            <h1 class="display-2 fw-normal" id="HH1">SurveyHorse</h1>
+                            <p class="lead fw-normal" id="HH2">Create your customize surveys online.</p>
+                            <a class="register btn btn-light" id="regbutton" href="/register">Register Now!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="service" class="container text-center mb-5">
+        <div class="row row-cols-1 row-cols-md-2 g-1">
+            <div class="col">
+                <div class="card m-2" style="background-color: #e0e9e9;">
+                    <a href="/survey/add/">
+                        <div>
+                            <img src="/Assets/images/home-survey.png" class="card-img-top" alt="Create survey" id="create" >
+                        </div>
+                        <div class="card-body">
+                            <div class="overlayCard">
+                            <div class="cardText">Create customize survey with text, multiple-choice and true/false questions</div> 
+                            </div>
+                        </div>
+                    </a>
+                    <p class="card-text">Create your own survey</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card m-2" style="background-color: #e0e9e9;">
+                    <a href="/survey/list">
+                        <div>
+                            <img src="/Assets/images/home-report.png" class="card-img-top" alt="Analyze data" id="analyze">
+                        </div>
+                    
+                    <div class="card-body">
+                        <div class="overlayCard">
+                            <div class="cardText">View your survey result with statistic data and export options</div> 
+                         </div>
+                        
+                    </div>
+                </a>
+                <p class="card-text">Analyze your data</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="activeSurvey" class="container  mb-5">
+        <h4 class="title text-center">Active Survey</h4>
+        <div class="row row-cols-1 row-cols-md-3 g-1">
+            <% for(let i = 0; i < surveys.length; i++) { %>
+                <% if(surveys[i].active) {%>
+                    <div class="col">
+                        <div class="card m-3" style="background-color:#e0e9e9;">
+                            <div class="card-body text-center">
+                                <h5 class="card-title"><%= surveys[i].title %></h5>
+                                <p class="card-text ">
+                                    Expiry Date: 
+                                    <% if(surveys[i].manualSetOn) { %>
+                                         <%='No Expiry Date'%>
+                                    <% } else { %>
+                                        <%= moment(surveys[i].endDate).format('YYYY-MM-DDTHH:mm') %>
+                                    <% } %>
+                                </p>
+                                <a href="/survey/response/add/<%= surveys[i]._id %>">
+                                    <div class="overlayCard">
+                                        <div class="cardText">Click to do survey!</div> 
+                                        <p class="d-grid gap-2"></p>   
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>  
+    </div>
+</div>

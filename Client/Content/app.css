@@ -1,0 +1,235 @@
+.input-group-addon:first-child
+{
+    border-right: 0;
+}
+
+.input-group-addon
+{
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    border: 1px solid darkgrey;
+    border-radius: 4xpx; 
+}
+
+.input-group-addon .fa
+{
+    font-size: 18px;
+}
+
+.input-group .form-control
+{
+    position:relative;
+    z-index: 2;
+    float:left;
+    margin-bottom: 0;
+}
+
+.input-group .form-control:last-child
+{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+
+
+.login
+{
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    background-color: lightgrey;
+    border-radius: .3rem;
+}
+
+.login input
+{
+    background-color: white;
+    border-color: darkgrey;
+    border-radius: .4em;
+    width: 100%;
+}
+
+.obtn {
+    float: right;
+    margin-top: -38px;
+    position: relative;
+}
+.qRemove {
+    float: right
+}
+
+
+/*Custom CSS*/
+body {
+    background-color: #eaf0f7;
+    color:#576F72;    
+    font-family: Century Gothic,  Arial, sans-serif;
+}
+.navbar-brand:hover{
+    transform: scale(1.1);
+}
+.nav-link:hover{
+    transform: scale(1.1);
+    padding-left: 25px;
+}
+
+.nav-link{
+    color: #FFF;
+    font-size: 120%;
+}
+
+/*.container, #listContainer{
+    min-height: 400px;
+    margin-bottom: 100px;
+    clear: both;
+    padding-bottom: 120px;
+    padding-top: 30px;
+
+}*/
+#banner .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(105, 103, 103);
+    opacity: 0.5;
+    z-index: 1;
+  }
+  #banner .container {
+    position: relative;
+    z-index: 2;
+  }
+  #banner #myVideo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
+  #regbutton:hover
+  {
+    transform: scale(1.1);
+  }
+#banner {
+    padding: 15vh;
+    background-color:#E4DCCF;
+}
+
+#HH1 {
+    box-shadow: inset 0 0 0 0 #576F72;
+    color: #fff;
+    padding: 0 .25rem;
+    margin: 0 -.25rem;
+    transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+}
+#HH1:hover{
+    color: #576F72;
+    box-shadow: inset 500px 0 0 0 #fff;
+}
+#HH2:hover{
+    transform: scale(1.05);
+}
+.overlayCard{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #576F72;
+    z-index: 0;
+}
+.card:hover .overlayCard{
+    opacity: 0.8;
+}
+
+.cardText {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+.card-text{
+    padding-bottom: 30px;
+}
+/*#banner::before {
+    content: "";
+    background-image: url(/Assets/images/banner.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    padding: 15vh 0;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;   
+}*/
+
+#addTextQ, #addMCQ, #addTFQ {
+    background-color: #7D9D9C;
+    border-color: #576F72;
+    
+}
+#updateButton, #submitButton, #loginButton{
+background-color: #3A5BA0;
+border-color: #576F72;
+}
+
+#cbtn, #add, #cbtnResponse, #cancelButton{
+    background-color: #FFB562;
+}
+
+.rowStat  {
+    background-color: #e0e9e9;    
+    border-radius: 20px;
+    padding: 15px;
+    margin: 10px;
+}
+main {
+    padding-bottom: 120px;
+}
+
+.modal-header {
+    padding:9px 15px;
+    color: #842029;
+    border-bottom:1px solid #eee;
+    background-color: #f5c2c7;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+ }
+ /*backup if video not supported*/
+ @media (pointer: coarse) and (hover: none) {
+    header {
+      background: url(/Assets/images/banner.jpg) black no-repeat center center scroll;
+    }
+  
+    header video {
+      display: none;
+    }
+  }

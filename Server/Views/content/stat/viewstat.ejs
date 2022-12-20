@@ -1,0 +1,139 @@
+<div class="container">
+    <h2 class="title my-5"><%= title %></h2>
+    <div id="report" class="row">
+        <div>
+            <h4>Survey Name: <%= surveys.title %> </h4>
+            <h4>Total Response: <%= responses.length %> </h4>
+        </div>
+        <% if(responses.length !== 0) { %> 
+            <div class="col">
+                <a id="csv" class="btn btn-warning my-3" data="<%= surveys.id%>"><i class="fa-solid fa-file-csv fa-lg"></i> Download CSV Report</a>
+                <a id="pdf" class="btn btn-warning my-3" href="#"><i class="fa-solid fa-file-pdf fa-lg"></i> Download Chart Report</a>
+            </div>
+            
+            <% for(let i = 0; i < surveys.questions.length; i++) { %>
+                <div id="q<%= i %>" class= "rowStat">  
+                    <h3>Question (<%= i +1 %>): <%=surveys.questions[i].qText%></h3>
+                    <% if( surveys.questions[i].qType != "text") {%>
+                        <% let optArr = [] %>
+                        <% for (let r = 0; r < surveys.questions[i].qOption.length; r++ ) { %> 
+                            <% optArr.push(surveys.questions[i].qOption[r]) %>
+                        <% } %>
+                        <% let ansArr = [] %>
+                        <% for (let r = 0; r < responses.length; r++ ) { %> 
+                            <% ansArr.push(responses[r].responses[i].answer) %>
+                        <% } %>
+                        <% let count = optArr.map(e => ({[e]: ansArr.filter(k => k === e).length})); %>
+
+                        <% console.log(count )%>
+
+                        <p><%= JSON.stringify(count, null, '\t').replace(/[{","}]/g, ' ' ) %> </p> 
+                    <% } %>
+                    <div class="text-center">
+                        <canvas id="myChart<%= i %>" style="width: 100%; max-width: 800px; max-height: 350px; display: inline;"></canvas>
+                    </div>
+                </div>          
+            <% } %>
+        <% } %>
+    </div>
+</div>
+<% for(let i = 0; i < surveys.questions.length; i++) { %>
+    <% let count = {} %>
+    <% let textArr = [] %>
+
+    <% for (let r = 0; r < responses.length; r++ ) { %>
+        <% textArr.push(responses[r].responses[i].answer) %>
+    <% } %>
+    <% textArr.forEach(element => { %>
+        <% count[element] = (count[element] || 0) + 1%>
+    <% }) %>
+    <script>
+        if("<%= surveys.questions[i].qType %>" == "text") 
+        { 
+            
+            let textStr = "<%= JSON.stringify(count, null, '')%>";
+            let textStr2 = textStr.replaceAll("&#34;", '"');
+            let textObj = JSON.parse(textStr2);
+
+            let words = Object.entries(textObj).map(([key, value]) => ({key,value}));
+            //console.log(typeof(words));
+            //console.log(words);
+            
+            let chart = new Chart(document.getElementById("myChart<%= i %>").getContext("2d"), {
+                type: "wordCloud",
+                data: {
+                    labels: words.map((d) => d.key),
+                    datasets: [
+                        {
+                            label: "",
+                            data: words.map((d) => d.value),
+                            size: words.map((d) => 10 + d.value * 10)
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: false,
+                        text: "<%=surveys.questions[i].qText%>"
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });     
+        } 
+        else 
+        {
+            let x = "<%=surveys.questions[i].qOption%>";
+            let xValues = x.split(",");
+            //console.log(xValues);
+
+            "<% let ansArr = [] %>"
+            "<% for (let r = 0; r < responses.length; r++ ) { %> "
+                "<% ansArr.push(responses[r].responses[i].answer) %>"
+            "<% } %>"
+
+            let y = "<%=ansArr%>".split(",");
+            let result = {}
+            xValues.forEach(function(item) {
+                result[item] = 0
+            })
+
+            y.forEach(function(item) {
+                if(result.hasOwnProperty(item)) {
+                    result[item]++
+                }
+            })
+            let yValues = Object.values(result);
+            //console.log(yValues);
+
+            let color = "";
+            function genColor() {
+                let l = '0123456789ABCDEF'.split('');
+                let c = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    c += l[Math.floor(Math.random() * 16)];
+                }
+                return c;
+            }
+            let barColors = [];
+            for (let ci = 0; ci < xValues.length; ci++){
+                color = genColor();
+                barColors.push(color);
+            }
+
+            new Chart("myChart<%= i %>", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                }
+            });
+        }
+    </script>
+<% } %>
